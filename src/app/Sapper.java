@@ -23,6 +23,12 @@ public class Sapper {
     while (true) {
       System.out.println("Enter coordinates as numbers between 0 and 7, one by one, by using space separator: ");
       String[] move = scanner.nextLine().trim().split(" ");
+
+      if (move.length != 2) {
+        System.out.println("Enter two numbers!");
+        continue;
+      }
+
       try {
         int rowCoordinate = Integer.parseInt(move[0]);
         int colCoordinate = Integer.parseInt(move[1]);
@@ -38,11 +44,10 @@ public class Sapper {
           break;
         }
 
-        countMines(mines, rowCoordinate, colCoordinate);
         updateDisplay(display, mines, rowCoordinate, colCoordinate);
         printDisplay(display);
 
-        boolean isFinished = isAllEmptyCells(display, mines);
+        boolean isFinished = isGameOver(display, mines);
         if (isFinished) {
           System.out.println("Game is over! You won!");
           printMines(mines);
@@ -118,7 +123,7 @@ public class Sapper {
     }
   }
 
-  private static boolean isAllEmptyCells(String[][] display, boolean[][] mines) {
+  private static boolean isGameOver(String[][] display, boolean[][] mines) {
     for (int row = 0; row < SIZE; row++) {
       for (int col = 0; col < SIZE; col++) {
         if (!mines[row][col] && display[row][col].equals(EMPTY)) {
