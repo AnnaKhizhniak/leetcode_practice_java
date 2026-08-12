@@ -28,7 +28,7 @@ public class HashNumbers {
           System.out.println("Input data is not correct!");
           continue OUTER_LOOP;
         }
-        
+
         result.add(numberBuilder.buildNumberByValue(array));
       }
       numberBuilder.printHashedNumbers(result);
@@ -36,3 +36,19 @@ public class HashNumbers {
     }
   }
 }
+
+
+/*
+1. input number sequence 1234567890
+2. check is sequence number
+3. draw number
+
+   1       #    #####   #####  #       #######  #####  #######  #####   #####    ###
+   2      ##   #     # #     # #    #  #       #     # #    #  #     # #     #  #   #
+   3     # #         #       # #    #  #       #           #   #     # #     # #     #
+   4       #    #####   #####  #    #  ######  ######     #     #####   ###### #     #
+   5       #   #             # #######       # #     #   #     #     #       # #     #
+   6       #   #       #     #      #  #     # #     #   #     #     # #     #  #   #
+   7     ##### #######  #####       #   #####   #####    #      #####   #####    ###
+
+ */
