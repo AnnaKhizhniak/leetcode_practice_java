@@ -97,7 +97,7 @@ public class HashNumberBuilder {
       }
   };
 
-  public String[] buildNumberByValue(String userInput) {
+  public String[] findNumberByValue(String userInput) {
     int digit = Integer.parseInt(userInput);
     return DIGITS[digit];
   }

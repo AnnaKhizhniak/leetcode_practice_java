@@ -29,7 +29,7 @@ public class HashNumbers {
           isValid = false;
           break;
         }
-        result.add(numberBuilder.buildNumberByValue(digit));
+        result.add(numberBuilder.findNumberByValue(digit));
       }
       if (!isValid) {
         continue;
