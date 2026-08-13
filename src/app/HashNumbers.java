@@ -11,7 +11,6 @@ public class HashNumbers {
     HashNumberBuilder numberBuilder = new HashNumberBuilder();
     System.out.println("Print your code dividing single numbers with spaces: ");
 
-    OUTER_LOOP:
     while (true) {
       String userInput = scanner.nextLine().trim().replaceAll("\\s+", " ");
 
@@ -21,15 +20,19 @@ public class HashNumbers {
       }
 
       String[] inputArray = userInput.split(" ");
-      ArrayList<char[][]> result = new ArrayList<>();
+      ArrayList<String[]> result = new ArrayList<>();
+      boolean isValid = true;
 
-      for (String array : inputArray) {
-        if (array.length() > 1 || !NUMBER_SEQUENCE.contains(array)) {
+      for (String digit : inputArray) {
+        if (digit.length() != 1 || !NUMBER_SEQUENCE.contains(digit)) {
           System.out.println("Input data is not correct!");
-          continue OUTER_LOOP;
+          isValid = false;
+          break;
         }
-
-        result.add(numberBuilder.buildNumberByValue(array));
+        result.add(numberBuilder.findNumberByValue(digit));
+      }
+      if (!isValid) {
+        continue;
       }
       numberBuilder.printHashedNumbers(result);
       return;
