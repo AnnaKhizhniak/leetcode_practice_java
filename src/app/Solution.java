@@ -1,58 +1,40 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Solution {
-  private final static int MAX_STRING_LENGTH = (int) Math.pow(10, 5);
-
   static void main(String[] args) {
     List<String> stringList = new ArrayList<>();
     String resultString = "";
 
-    findSubstringWithoutRepeatingCharacters("bbbbb", resultString, stringList);
-    getMaxStringLength(stringList);
+    findSubstringWithoutRepeatingCharacters("ab", resultString, stringList);
   }
 
-  public static void findSubstringWithoutRepeatingCharacters(String string, String resultString, List<String> stringList) {
-    if (string.length() > MAX_STRING_LENGTH) {
-      return;
+  public static int findSubstringWithoutRepeatingCharacters(String string, String resultString, List<String> stringList) {
+    if (string.isEmpty()) {
+      return 0;
     }
 
-    int key = 0;
-
-    while (key < string.length()) {
-      key = loopString(key, resultString, stringList, string);
-    }
+    return loopString(resultString, stringList, string);
   }
 
-  private static int loopString(int index, String resultString, List<String> stringList, String string) {
-    for (int i = index; i < string.length(); i++) {
-      if (!resultString.contains(string.substring(i, i + 1))) {
-        resultString += string.substring(i, i + 1);
-      } else {
-        if (!stringList.contains(resultString)) {
-          stringList.add(resultString);
-          resultString = "";
-        }
-
-        return index + 1;
+  private static int loopString(String resultString, List<String> stringList, String string) {
+    Set<Character> chars = new HashSet<>();
+    int index = 0;
+    int maxLength = 0;
+    for (int i = 0; i < string.length(); i++) {
+      while (chars.contains(string.charAt(i))) {
+        chars.remove(string.charAt(index));
+        index++;
       }
+      chars.add(string.charAt(i));
+      maxLength = maxLength < chars.size() ? chars.size() : maxLength;
     }
-    return string.length();
-  }
-
-  public static int getMaxStringLength(List<String> stringList) {
-    int maxStringLength = 1;
-
-    for (String s : stringList) {
-      int stringLength = s.length();
-      if (maxStringLength < stringLength) {
-        maxStringLength = stringLength;
-      }
-    }
-    System.out.println(maxStringLength);
-    return maxStringLength;
+    System.out.println(maxLength);
+    return maxLength;
   }
 }
 
