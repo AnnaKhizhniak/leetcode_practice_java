@@ -1,82 +1,66 @@
 package app;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 public class Solution {
-  private final static int MAX_STRING_LENGTH = (int) Math.pow(10, 5);
-
   static void main(String[] args) {
-    List<String> stringList = new ArrayList<>();
-    String resultString = "";
+    Solution solution = new Solution();
 
-    findSubstringWithoutRepeatingCharacters("bbbbb", resultString, stringList);
-    getMaxStringLength(stringList);
+    solution.findMedianSortedArrays(new int[]{1, 3}, new int[]{2});
   }
 
-  public static void findSubstringWithoutRepeatingCharacters(String string, String resultString, List<String> stringList) {
-    if (string.length() > MAX_STRING_LENGTH) {
-      return;
+  public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+    int mergedArrayLength = nums1.length + nums2.length;
+    if (nums1.length > 1000
+        && nums2.length > 1000
+        && mergedArrayLength < 1 || mergedArrayLength > 2000) {
+      return 0.0;
     }
 
-    int key = 0;
+    int[] mergedArrays = new int[mergedArrayLength];
 
-    while (key < string.length()) {
-      key = loopString(key, resultString, stringList, string);
+
+    for (int i = 0; i < nums1.length; i++) {
+      mergedArrays[i] = nums1[i];
     }
-  }
 
-  private static int loopString(int index, String resultString, List<String> stringList, String string) {
-    for (int i = index; i < string.length(); i++) {
-      if (!resultString.contains(string.substring(i, i + 1))) {
-        resultString += string.substring(i, i + 1);
-      } else {
-        if (!stringList.contains(resultString)) {
-          stringList.add(resultString);
-          resultString = "";
-        }
-
-        return index + 1;
-      }
+    for (int j = 0; j < nums2.length; j++) {
+      mergedArrays[nums1.length + j] = nums2[j];
     }
-    return string.length();
-  }
 
-  public static int getMaxStringLength(List<String> stringList) {
-    int maxStringLength = 1;
+    Arrays.sort(mergedArrays);
 
-    for (String s : stringList) {
-      int stringLength = s.length();
-      if (maxStringLength < stringLength) {
-        maxStringLength = stringLength;
-      }
-    }
-    System.out.println(maxStringLength);
-    return maxStringLength;
+    double arrayLengthMedian = mergedArrayLength % 2 != 0
+        ? mergedArrays[(mergedArrayLength / 2)]
+        : (double) (mergedArrays[(mergedArrayLength / 2) - 1] + mergedArrays[(mergedArrayLength / 2)]) / 2;
+
+    return arrayLengthMedian;
   }
 }
 
 /*
-Given a string s, find the length of the longest substring without duplicate characters.
+Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
+The overall run time complexity should be O(log (m+n)).
 
 Example 1:
 
-Input: s = "abcabcbb"
-Output: 3
-Explanation: The answer is "abc", with the length of 3. Note that "bca" and "cab" are also correct answers.
+Input: nums1 = [1,3], nums2 = [2]
+Output: 2.00000
+Explanation: merged array = [1,2,3] and median is 2.
 Example 2:
 
-Input: s = "bbbbb"
-Output: 1
-Explanation: The answer is "b", with the length of 1.
-Example 3:
-
-Input: s = "pwwkew"
-Output: 3
-Explanation: The answer is "wke", with the length of 3.
-Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
+Input: nums1 = [1,2], nums2 = [3,4]
+Output: 2.50000
+Explanation: merged array = [1,2,3,4] and median is (2 + 3) / 2 = 2.5.
 
 
 Constraints:
-0 <= s.length <= 105
+
+nums1.length == m
+nums2.length == n
+0 <= m <= 1000
+0 <= n <= 1000
+1 <= m + n <= 2000
+-106 <= nums1[i], nums2[i] <= 106
+
  */
